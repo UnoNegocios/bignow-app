@@ -81,6 +81,15 @@
                     primary-color="#FFFFFF"
                     secondary-color="#000000">
                 </mux-player-->
+                <mux-player
+                    v-if="exercise.playback_id!=null"
+                    stream-type="on-demand"
+                    :playback-id="exercise.playback_id"
+                    metadata-video-title="Placeholder (optional)"
+                    metadata-viewer-user-id="Placeholder (optional)"
+                    primary-color="#FFFFFF"
+                    secondary-color="#000000">
+                </mux-player>
                 <v-chip-group>
                     <v-chip dark color="#e12826" small v-for="category in exercise.categories" :key="category.id">{{category.name}}</v-chip>
                 </v-chip-group>
@@ -236,7 +245,9 @@ import axios from "axios"
             /*for(var i = 0; this.currentRoutine.exercises.length; i++){
                 if(this.currentRoutine.exercises)
             }*/
-            return this.currentRoutine.exercises.filter(excercise=>excercise.categories.filter(category=>category.name == muscular_group)).length
+            console.log(this.currentRoutine.exercises.map(id=>id.categories.map(perro=>perro.name)))
+            console.log(muscular_group)
+            return this.currentRoutine.exercises.filter(excercise=>excercise.categories.filter(category=>category.name == muscular_group).length>0).length
         },
         openRoutine(routine){
             this.selectedRoutine = routine
