@@ -86,6 +86,7 @@ export default {
     },
   },
   created(){
+    console.log(this.$route.query.t)
     setTimeout(() => {
       localStorage.removeItem("password_reset")
     }, 2000);

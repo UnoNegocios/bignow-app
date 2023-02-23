@@ -20,7 +20,16 @@ Vue.use(VueRouter)
     name: 'Perfil',
     component: () => import('../components/Account.vue')
   },
-  
+  {
+    path: '/training',
+    name: 'Training',
+    component: () => import('../components/Training.vue')
+  },
+  {
+    path: '/meal',
+    name: 'Meal',
+    component: () => import('../components/Meal.vue')
+  },
 ]
 
 const router = new VueRouter({

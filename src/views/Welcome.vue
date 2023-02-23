@@ -80,6 +80,7 @@
 
       <v-stepper-content step="3">
         <v-card-title class="px-0"><v-spacer/>Ahora una foto para tu perfil<v-spacer/></v-card-title>
+
         <v-row class="ma-0 my-6" id="welcome">
             <v-spacer/>
                 <v-badge bordered color="rimary" dark icon="mdi-camera" overlap avatar offset-x="20" offset-y="140">
@@ -112,34 +113,34 @@
                 {{currentUser.email}}
                 <v-spacer/>
             </v-list-item>
-            <v-list-item style="min-height:25px; font-size: 16px; font-weight: 300;">
+            <v-list-item style="min-height:25px; font-size: 16px; font-weight: 300;" v-if="currentUser.phone!=undefined">
                 <v-spacer/>
-                81 2345 6789
-                <v-spacer/>
-            </v-list-item>
-            <v-list-item style="min-height:25px; font-size: 16px; font-weight: 300;">
-                <v-spacer/>
-                1.80 cm
+                {{currentUser.phone}}
                 <v-spacer/>
             </v-list-item>
-            <v-list-item style="min-height:25px; font-size: 16px; font-weight: 300;">
+            <v-list-item style="min-height:25px; font-size: 16px; font-weight: 300;" v-if="currentUser.height!=undefined">
                 <v-spacer/>
-                85 kgs
-                <v-spacer/>
-            </v-list-item>
-            <v-list-item style="min-height:25px; font-size: 16px; font-weight: 300;">
-                <v-spacer/>
-                <span style="font-weight:400; margin-right:5px;">Sexo: </span> Masculino
+                <span style="font-weight:400; margin-right:5px;">Estatura: </span>{{currentUser.height}} cms
                 <v-spacer/>
             </v-list-item>
-            <v-list-item style="min-height:25px; font-size: 16px; font-weight: 300;">
+            <v-list-item style="min-height:25px; font-size: 16px; font-weight: 300;" v-if="currentUser.weight!=undefined">
                 <v-spacer/>
-                <span style="font-weight:400; margin-right:5px;">Cumpleaños: </span> 01/01/1998
+                <span style="font-weight:400; margin-right:5px;">Peso: </span>{{currentUser.weight}} kgs
                 <v-spacer/>
             </v-list-item>
-            <v-list-item style="min-height:40px; font-size: 18px; font-weight: 300;">
+            <v-list-item style="min-height:25px; font-size: 16px; font-weight: 300;" v-if="currentUser.gender!=undefined">
                 <v-spacer/>
-                <span style="font-weight:400; margin-right:5px;">Plan: </span> 
+                <span style="font-weight:400; margin-right:5px;">Sexo: </span> {{currentUser.gender}}
+                <v-spacer/>
+            </v-list-item>
+            <v-list-item style="min-height:25px; font-size: 16px; font-weight: 300;" v-if="currentUser.birthdate!=undefined">
+                <v-spacer/>
+                <span style="font-weight:400; margin-right:5px;">Cumpleaños: </span> {{currentUser.birthdate}}
+                <v-spacer/>
+            </v-list-item>
+            <v-list-item style="min-height:40px; font-size: 18px; font-weight: 300;" v-if="currentUser.training_plan!=undefined">
+                <v-spacer/>
+                <span style="font-weight:400; margin-right:5px;">Plan: </span> {{currentUser.training_plan.name}}
                 <v-spacer/>
             </v-list-item>
         </v-list>
@@ -189,7 +190,7 @@ export default {
         password1:'',
         successPass: false,
         successPass1: false,
-        imageData:''
+        imageData:'',
       }
     },
     watch:{
@@ -197,11 +198,12 @@ export default {
             handler(){     
                 let formData = new FormData();
                 formData.append('image', this.imageData);
+                
                 axios.post(process.env.VUE_APP_BACKEND_ROUTE + "api/v1/user/photo"
                     ,formData
                     ,{headers: {"Content-Type": "multipart/form-data"}}
                 ).then(response=>{
-                    this.currentUser.profile_photo_path = 'https://unopack.mx/files/thumbnail/' + response.data
+                    this.currentUser.profile_photo_path = process.env.VUE_APP_BACKEND_ROUTE + 'files/thumbnail/' + response.data
                 })
             },deep:true,
         }

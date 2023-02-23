@@ -1,16 +1,16 @@
 <template>
   <v-app>
     <v-app-bar class="ma-0 py-3 pl-2 pr-3 elevation-0" style="height:80px;" app v-if="!account">
-      <v-btn icon color="white" class="mr-2" to="/">
+      <v-btn icon color="white" class="mr-2" @click="inicio()">
         <v-icon>
           mdi-apps
         </v-icon>
       </v-btn>
-      <span style="font-weight:500; font-size:25px;">Hola {{currentUser.name.split(" ")[0]}}</span>
+      <span style="font-weight:500; font-size:25px;" v-if="currentUser.name!=undefined">Hola {{currentUser.name.split(" ")[0]}}</span>
       <v-spacer/>
       <a href="/profile">
-        <v-avatar size="50px" color="#e12826" style="font-size:20px; font-family:Oswald; color:white;">
-          {{currentUser.name.slice(0,1)}}
+        <v-avatar size="50px">
+          <v-img alt="user" :src="currentUser.profile_photo_path"></v-img>
         </v-avatar>
       </a>
     </v-app-bar>
@@ -51,6 +51,9 @@
       closeDrawer: function(){
         
       },
+      inicio(){
+        location.replace('/')
+      }
     }
   }
 </script>

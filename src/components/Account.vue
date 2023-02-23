@@ -12,7 +12,7 @@
 
                     <v-badge bordered color="rimary" dark icon="mdi-camera" overlap avatar offset-x="20" offset-y="95">
                         <v-avatar size="100px">
-                            <v-img alt="user" :src="'/user.png'"></v-img>
+                            <v-img alt="user" :src="currentUser.profile_photo_path"></v-img>
                         </v-avatar>
                     </v-badge>
 
@@ -135,7 +135,7 @@ export default {
                     ,{headers: {"Content-Type": "multipart/form-data"}}
                 ).then(response=>{
                     console.log(response)
-                    this.currentUser.profile_photo_path = 'https://unopack.mx/files/thumbnail/' + response.data
+                    this.currentUser.profile_photo_path = process.env.VUE_APP_BACKEND_ROUTE + 'files/thumbnail/' + response.data
                     this.$nextTick(() => {this.save()})
                 })
             },deep:true,
