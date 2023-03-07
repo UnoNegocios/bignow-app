@@ -105,7 +105,7 @@
                 <v-spacer/>
             </v-toolbar>
 
-            <div v-for="(exercise, index) in selectedRoutine.exercises" :key="index">
+            <div v-for="(exercise, index) in selectedRoutine" :key="index">
                 <v-card-title v-if="( index % bloques ) == 0 || index == 0">Bloque {{(index/bloques)+1}}</v-card-title>
                 <v-card class="elevation-0 pa-4 ma-4" style="background:white;" max-width="100%">
                     <v-row class="ma-0">
@@ -240,12 +240,11 @@ import axios from "axios"
             /*for(var i = 0; this.currentRoutine.exercises.length; i++){
                 if(this.currentRoutine.exercises)
             }*/
-            console.log(this.currentRoutine.exercises.map(id=>id.categories.map(perro=>perro.name)))
-            console.log(muscular_group)
             return this.currentRoutine.exercises.filter(excercise=>excercise.categories.filter(category=>category.name == muscular_group).length>0).length
         },
         openRoutine(routine){
-            this.selectedRoutine = routine
+            this.selectedRoutine = routine.exercises.sort((a, b) => a.additional_data.index - b.additional_data.index)
+            console.log(this.selectedRoutine)
             this.openDialog = true
         },
         closeRoutine(){
